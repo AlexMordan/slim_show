@@ -8,7 +8,6 @@ use Psr\Http\Message\ResponseInterface as Response;
 
 require '../../vendor/autoload.php';
 session_start();
-$deleted = apc_clear_cache() && apc_clear_cache('user');
 
 $dotenv = Dotenv::create(__DIR__."/../..");
 $dotenv->overload();
@@ -32,7 +31,7 @@ $app = new \Slim\App($container);
 
 $app->group("/users", function () use ($app){
     $app->get('', UserController::class.":index");
-    $app->get('/{id}',UserController::class.':show');
+    $app->get('/{id:[0-9]+}',UserController::class.':show');
 });
 
 
