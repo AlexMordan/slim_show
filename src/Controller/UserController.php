@@ -28,7 +28,7 @@ class UserController extends BaseController
     public function index(Request $request, Response $response, $args)
     {
         $users = $this->userRepository->findAll();
-        $this->view->render($response,"user/index.php", ['users' => $users]);
+        $this->view->render($response,"user/index.twig", ['users' => $users]);
     }
 
     /**
@@ -42,7 +42,7 @@ class UserController extends BaseController
         try {
             $id = $args['id'];
             $user = $this->entityManager->find(User::class, $id);
-            $this->view->render($response,"user/show.php", ['user' => $user]);
+            $this->view->render($response,"user/show.twig", ['user' => $user]);
         } catch (Exception $e) {
             throw $e;
         }

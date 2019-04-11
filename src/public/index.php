@@ -19,9 +19,23 @@ $configuration = [
 ];
 
 $container = new \Slim\Container($configuration);
+
+
+// Register component on container
 $container['view'] = function ($container) {
-    return new \Slim\Views\PhpRenderer('../View/');
+    $view = new \Slim\Views\Twig(__DIR__.'/../View', [
+        'cache' => false,
+        //'cache' => __DIR__.'/../Storage/Cache'
+    ]);
+
+    // Instantiate and add Slim specific extension
+    $router = $container->get('router');
+    $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
+    $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+
+    return $view;
 };
+
 $container['entityManager'] = function (){
     return (new \App\Core\EntityManager())->getEntityManager();
 };
