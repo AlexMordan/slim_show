@@ -1,0 +1,25 @@
+{% extends  "layout.twig" %}
+{% block title %}Home page{% endblock %}
+
+{% block content %}
+    <div class="page-content home-page">
+        <div class="info">
+            <h1>Home page</h1>
+            <div class="jumbotron">
+            <pre>
+                {% if auth.isAuth %}
+                    <span>Full Name: {{ auth.user.getFullName }}</span>
+                    <span>Login: {{ auth.user.getLogin }}</span>
+                    <span>Email: {{ auth.user.getEmail }}</span>
+                    <span>Role: {{ auth.user.getRole }}</span>
+                {% else %}
+                    <span>You guest</span>
+                {% endif %}
+            </pre>
+            </div>
+        </div>
+        <div class="image">
+            <img src="/assets/img/bender1.png" alt="">
+        </div>
+    </div>
+{% endblock %}

@@ -2,6 +2,7 @@
 
 use App\Controller\AuthenticationController;
 use App\Controller\Middleware\AuthMiddleware;
+use App\Controller\PageController;
 use App\Controller\UserController;
 use Dotenv\Dotenv;
 
@@ -34,6 +35,7 @@ $app = new \Slim\App($container);
 $container['view'] = function ($container) {
     $view = new \Slim\Views\Twig(__DIR__.'/../View', [
         'cache' => false,
+        'debug' => true
         //'cache' => __DIR__.'/../Storage/Cache'
     ]);
 
@@ -41,6 +43,8 @@ $container['view'] = function ($container) {
     $router = $container->get('router');
     $uri = \Slim\Http\Uri::createFromEnvironment(new \Slim\Http\Environment($_SERVER));
     $view->addExtension(new \Slim\Views\TwigExtension($router, $uri));
+    // This line should allow the use of {{ dump() }}
+    $view->addExtension(new Twig\Extension\DebugExtension());
 
     $view->getEnvironment()->addGlobal('auth', $container->get('auth'));
 
@@ -62,15 +66,9 @@ $app->post('/login', AuthenticationController::class.':login');
 
 $app->get('/logout', AuthenticationController::class.':logout')->setName('logout');
 
+$app->get('/', PageController::class.':home');
+$app->get('/about', PageController::class.':about');
 
-//$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-//    $name = $args['name'];
-//    $response->getBody()->write("Hello, $name");
-//
-//    return $response;
-//});
 
-$app->get('/', function (){
-    echo 'hello world';
-});
+
 $app->run();
