@@ -6,16 +6,16 @@
         <div class="info">
             <h1>Home page</h1>
             <div class="jumbotron">
-            <pre>
-                {% if auth.isAuth %}
-                    <span>Full Name: {{ auth.user.getFullName }}</span>
-                    <span>Login: {{ auth.user.getLogin }}</span>
-                    <span>Email: {{ auth.user.getEmail }}</span>
-                    <span>Role: {{ auth.user.getRole }}</span>
-                {% else %}
-                    <span>You guest</span>
-                {% endif %}
-            </pre>
+                <ul>
+                    {% if auth.isAuth %}
+                        <li>Full Name: {{ auth.user.getFullName }}</li>
+                        <li>Login: {{ auth.user.getLogin }}</li>
+                        <li>Email: {{ auth.user.getEmail }}</li>
+                        <li>Role: {{ auth.user.getRole }}</li>
+                    {% else %}
+                        <li>You guest</li>
+                    {% endif %}
+                </ul>
             </div>
         </div>
         <div class="image">
