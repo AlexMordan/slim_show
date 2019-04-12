@@ -26,7 +26,7 @@ class EntityManager
             'port' => getenv('DB_PORT')
         );
 
-        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode);
+        $config = Setup::createAnnotationMetadataConfiguration($paths, $isDevMode,null, null, false);
         $this->entityManager = DoctrineEntityManager::create($dbParams, $config);
     }
 

@@ -1,0 +1,29 @@
+{% extends  "auth/layout.twig" %}
+{% block title %}Please sign in{% endblock %}
+{# https://github.com/twbs/bootstrap/tree/master/site/content/docs/4.3/examples/sign-in #}
+{% block content %}
+    <form class="form-signin" method="post" action="/login">
+        <i style="font-size: 100px;text-align: center;margin-bottom: 20px" class="far fa-user-circle"></i>
+        <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+        {{ message }}
+        {% if message %}
+            <div class="alert alert-primary" role="alert">
+                {{ message }}
+            </div>
+        {% endif %}
+        <label for="inputLogin" class="sr-only">Login</label>
+        {% if login is empty %}
+            <input type="text" name="inputLogin" id="inputLogin" class="form-control" placeholder="login" required autofocus>
+            {% else %}
+            <input type="text" name="inputLogin" id="inputLogin" value="{{ login }}" class="form-control" placeholder="login" required autofocus>
+        {% endif %}
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+        {% if error %}
+            <div class="alert alert-danger" role="alert">
+                {{ error }}
+            </div>
+        {% endif %}
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+{% endblock %}
