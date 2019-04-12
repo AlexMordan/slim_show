@@ -47,14 +47,34 @@ class AuthenticationController extends BaseController
         return $response->withRedirect('/');
     }
 
-    public function getRegister(Request $request, Response $response)
+    public function register(Request $request, Response $response)
     {
-
+        if ($request->isPost()) {
+            return $this->postRegister($request, $response);
+        }
+        return $this->view->render($response, 'auth/register.twig');
     }
 
-    public function postRegister(Request $request, Response $response)
+    private function postRegister(Request $request, Response $response)
     {
+        $params = $request->getParsedBody();
+        $login = $params['inputLogin'];
+        $email = $params['inputEmail'];
+        $password = $params['inputPassword'];
 
+        $errors = $this->auth->validateRegistration($login, $email, $password);
+
+        if (empty($errors)) {
+            $user = $this->auth->register($login, $email, $password);
+            $this->auth->loginByUser($user);
+            return $response->withRedirect('/');
+
+        } else {
+            return $this->view->render(
+                $response,
+                'auth/register.twig',
+                ['errors' => $errors, 'login' => $login, 'email' => $email]
+            );
+        }
     }
-
 }

@@ -2,6 +2,7 @@
 
 use App\Controller\AuthenticationController;
 use App\Controller\Middleware\AuthMiddleware;
+use App\Controller\Middleware\GuestMiddleware;
 use App\Controller\PageController;
 use App\Controller\UserController;
 use Dotenv\Dotenv;
@@ -58,15 +59,20 @@ $container['view'] = function ($container) {
 
 $app->group("/users", function () use ($app){
     $app->get('', UserController::class.":index");
-    $app->get('/{id:[0-9]+}',UserController::class.':show')->add(new AuthMiddleware($app->getContainer()));
+    $app->get('/{id:[0-9]+}',UserController::class.':show')
+        ->add(new AuthMiddleware($app->getContainer()));
 });
 
-$app->get('/login', AuthenticationController::class.':login')->setName('login');
+$app->get('/login', AuthenticationController::class.':login')
+    ->setName('login');
 $app->post('/login', AuthenticationController::class.':login');
+
+$app->map(['GET', 'POST'], '/registration', AuthenticationController::class.':register')
+    ->add(new GuestMiddleware($app->getContainer()));
 
 $app->get('/logout', AuthenticationController::class.':logout')->setName('logout');
 
-$app->get('/', PageController::class.':home');
+$app->get('/', PageController::class.':home')->setName('home');
 $app->get('/about', PageController::class.':about');
 
 

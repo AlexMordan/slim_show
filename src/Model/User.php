@@ -48,8 +48,8 @@ class User
      */
     protected $password;
     /**
-     * @Column(type="string")
-     * @var string
+     * @Column(type="string", nullable=true)
+     * @var ?string
      */
     protected $fullName;
 
@@ -59,8 +59,8 @@ class User
      */
     protected $role;
     /**
-     * @var string
-     * @Column(type="string")
+     * @var ?string
+     * @Column(type="string", nullable=true)
      */
     protected $avatar;
 
@@ -105,7 +105,7 @@ class User
     /**
      * @return string
      */
-    public function getFullName(): string
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
@@ -129,7 +129,7 @@ class User
     /**
      * @return string
      */
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }

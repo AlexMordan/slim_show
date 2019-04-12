@@ -20,4 +20,12 @@ class UserRepository  extends EntityRepository
         }
         return null;
     }
+    public function checkLoginAvailable(string $login):bool
+    {
+        return  !((bool) $this->findOneBy(['login' => $login]));
+    }
+    public function checkEmailAvailable(string $email):bool
+    {
+        return  !((bool) $this->findOneBy(['email' => $email]));
+    }
 }

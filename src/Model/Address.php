@@ -11,25 +11,25 @@ use Doctrine\ORM\Mapping\Embeddable;
 class Address
 {
     /**
-     * @Column(type = "string")
+     * @Column(type = "string", nullable=true)
      * @var string
      */
     private $street;
 
     /**
-     * @Column(type = "string")
+     * @Column(type = "string", nullable=true)
      * @var string
      */
     private $postalCode;
 
     /**
-     * @Column(type = "string")
+     * @Column(type = "string", nullable=true)
      * @var string
      */
     private $city;
 
     /**
-     * @Column(type = "string")
+     * @Column(type = "string", nullable=true)
      * @var string
      */
     private $country;
