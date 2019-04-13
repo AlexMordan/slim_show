@@ -17,6 +17,13 @@
 <body>
 {% include 'partial/navbar.twig' %}
 
+{% if block('breadcrumb') is defined %}
+    <div class="container">
+        {{ block('breadcrumb')|raw }}
+    </div>
+{% endif %}
+
+
     <div class="container">
         {% block content %}
             <h1>Index</h1>
