@@ -10,7 +10,7 @@ use Exception;
 use Psr\Container\ContainerInterface;
 use Slim\Http\Request;
 use Slim\Http\Response;
-
+use Slim\Http\UploadedFile;
 
 class UserController extends BaseController
 {
@@ -29,7 +29,7 @@ class UserController extends BaseController
     public function index(Request $request, Response $response, $args)
     {
         $users = $this->userRepository->findAll();
-        $this->view->render($response,"user/index.twig", ['users' => $users]);
+        $this->view->render($response, "user/index.twig", ['users' => $users]);
     }
 
 
@@ -45,7 +45,7 @@ class UserController extends BaseController
         try {
             $id = $args['id'];
             $user = $this->entityManager->find(User::class, $id);
-            return $this->view->render($response,"user/show.twig", ['user' => $user]);
+            return $this->view->render($response, "user/show.twig", ['user' => $user]);
         } catch (Exception $e) {
             throw $e;
         }
@@ -54,11 +54,30 @@ class UserController extends BaseController
     public function profile(Request $request, Response $response)
     {
         $user = $this->userRepository->find($this->auth->user()->getId());
-        return $this->view->render($response,"user/profile.twig", ['user' => $user]);
+        return $this->view->render($response, "user/profile/index.twig", ['user' => $user]);
     }
+
     public function editProfile(Request $request, Response $response)
     {
+        $user = $this->entityManager->find(User::class, $this->auth->user()->getId());
+        if ($request->isGet()) {
+            return $this->view->render($response, "user/profile/edit.twig", ['user' => $user]);
+        }
+        /** * @var UploadedFile[] $uploadedFiles */
+        $uploadedFiles = $request->getUploadedFiles();
+        if (!empty($uploadedFiles['inputAvatar'])) {
+            $directory = '../public/' . getenv('UPLOAD_DIR');
+            $uploadedFile = $uploadedFiles['inputAvatar'];
+            if ($uploadedFile->getError() === UPLOAD_ERR_OK) {
+                $filename = $this->moveUploadedFile($directory, $uploadedFile);
+                $user->setAvatar('/' . getenv('UPLOAD_DIR') . '/' . $filename);
+            }
+        }
 
+        //TODO: update another property
+
+        $this->entityManager->flush();
+        return $response->withRedirect('/users/profile');
     }
 
 }

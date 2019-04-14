@@ -60,9 +60,11 @@ class Bootstrap
             $app->get('', UserController::class.":index");
 
             $app->get('/profile', UserController::class.':profile')
+                ->setName('profile')
                 ->add(new AuthMiddleware($app->getContainer()));
-            $app->get('/profile/edit', UserController::class.':editProfile')
+            $app->map(['GET', 'POST'], '/profile/edit', UserController::class.':editProfile')
                 ->add(new AuthMiddleware($app->getContainer()));
+
 
             $app->get('/{id:[0-9]+}',UserController::class.':show')
                 ->add(new AuthMiddleware($app->getContainer()));
