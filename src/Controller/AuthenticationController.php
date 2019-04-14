@@ -67,7 +67,7 @@ class AuthenticationController extends BaseController
         if (empty($errors)) {
             $user = $this->auth->register($login, $email, $password);
             $this->auth->loginByUser($user);
-            return $response->withRedirect('/');
+            return $response->withRedirect('/users/profile');
 
         } else {
             return $this->view->render(

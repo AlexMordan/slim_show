@@ -12,32 +12,32 @@ class Address
 {
     /**
      * @Column(type = "string", nullable=true)
-     * @var string
+     * @var ?string
      */
     private $street;
 
     /**
      * @Column(type = "string", nullable=true)
-     * @var string
+     * @var ?string
      */
     private $postalCode;
 
     /**
      * @Column(type = "string", nullable=true)
-     * @var string
+     * @var ?string
      */
     private $city;
 
     /**
      * @Column(type = "string", nullable=true)
-     * @var string
+     * @var ?string
      */
     private $country;
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getStreet(): string
+    public function getStreet(): ?string
     {
         return $this->street;
     }
@@ -51,9 +51,9 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getPostalCode(): string
+    public function getPostalCode(): ?string
     {
         return $this->postalCode;
     }
@@ -67,9 +67,9 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCity(): string
+    public function getCity(): ?string
     {
         return $this->city;
     }
@@ -83,9 +83,9 @@ class Address
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getCountry(): string
+    public function getCountry(): ?string
     {
         return $this->country;
     }

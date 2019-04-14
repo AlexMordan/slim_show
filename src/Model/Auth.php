@@ -60,6 +60,7 @@ class Auth
         $user->setEmail($email);
         $user->setPassword(password_hash($password,PASSWORD_DEFAULT));
         $user->setRole(User::ROLE_USER);
+        $user->setAvatar('/assets/img/avatar.png');
         $this->entityManager->persist($user);
         $this->entityManager->flush();
         return $user;
