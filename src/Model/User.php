@@ -103,7 +103,7 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getFullName(): ?string
     {
@@ -127,7 +127,7 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
     public function getAvatar(): ?string
     {
