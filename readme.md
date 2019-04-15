@@ -1,6 +1,10 @@
 # Doctrine commands
 ```bash
-vendor/bin/doctrine                Show list all commands
+
+Show list all commands
+linux - vendor/bin/doctrine              
+windows - php vendor/doctrine/orm/bin/doctrine
+
 orm:schema-tool:create             Processes the schema and either create it directly on EntityManager Storage Connection or generate the SQL output
 orm:schema-tool:drop               Drop the complete database schema of EntityManager Storage Connection or generate the corresponding SQL output
 orm:schema-tool:update             Executes (or dumps) the SQL needed to update the database schema to match the current mapping metadata
