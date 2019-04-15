@@ -1,0 +1,15 @@
+{% extends  "layout.twig" %}
+{% block title %}Show {{ user.getLogin }}{% endblock %}
+
+{% block content %}
+<div class="profile">
+    <div class="avatar">
+        <img src="{{ user.getAvatar }}" alt="user avatar"/>
+    </div>
+    <div class="info">
+            <span>
+               {{ user.getEmail }}
+            </span>
+    </div>
+</div>
+{% endblock %}

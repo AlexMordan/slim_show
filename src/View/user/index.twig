@@ -1,0 +1,39 @@
+{% extends  "layout.twig" %}
+{% block title %}Show All users{% endblock %}
+
+{% block content %}
+    <table class="table table-sm table-striped table-bordered">
+        <thead>
+        <tr>
+            <th>Имя</th>
+            <th>Логин</th>
+            <th>Email</th>
+            <th>Роль</th>
+            <th>Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        {# @var user App\Model\User #}
+
+        {% for user in users %}
+            <tr>
+                <td>
+                    {{ user.getFullName }}
+                </td>
+                <td>
+                    {{ user.getLogin }}
+                </td>
+                <td>
+                    {{ user.getEmail }}
+                </td>
+                <td>
+                    {{ user.getRole }}
+                </td>
+                <td>
+                    <a href="/users/{{ user.getId }}">Show</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

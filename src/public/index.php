@@ -1,49 +1,22 @@
 <?php
 
-use App\Controller\UserController;
-use Dotenv\Dotenv;
-
-use Psr\Http\Message\ServerRequestInterface as Request;
-use Psr\Http\Message\ResponseInterface as Response;
+use App\Core\Bootstrap;
 
 require '../../vendor/autoload.php';
+
 session_start();
-$deleted = apc_clear_cache() && apc_clear_cache('user');
 
-$dotenv = Dotenv::create(__DIR__."/../..");
-$dotenv->overload();
-
-$configuration = [
+$configurationContainer = [
     'settings' => [
         'displayErrorDetails' => true,
     ],
 ];
 
-$container = new \Slim\Container($configuration);
-$container['view'] = function ($container) {
-    return new \Slim\Views\PhpRenderer('../View/');
-};
-$container['entityManager'] = function (){
-    return (new \App\Core\EntityManager())->getEntityManager();
-};
-$app = new \Slim\App($container);
+$configurationView = [
+    'cache' => false,
+    'debug' => true
+    //'cache' => __DIR__.'/../Storage/Cache'
+];
 
-
-
-$app->group("/users", function () use ($app){
-    $app->get('', UserController::class.":index");
-    $app->get('/{id}',UserController::class.':show');
-});
-
-
-//$app->get('/hello/{name}', function (Request $request, Response $response, array $args) {
-//    $name = $args['name'];
-//    $response->getBody()->write("Hello, $name");
-//
-//    return $response;
-//});
-
-$app->get('/', function (){
-    echo 'hello world';
-});
-$app->run();
+$bootstrap = new Bootstrap($configurationContainer, $configurationView);
+$bootstrap->run();

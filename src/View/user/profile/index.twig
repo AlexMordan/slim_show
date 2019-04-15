@@ -1,0 +1,78 @@
+{% macro row(name, value) %}
+    <div class="row">
+        <div class="col-sm-3 col-md-2 col-5">
+            <label style="font-weight:bold;">{{ name }}</label>
+        </div>
+        <div class="col-md-8 col-6">
+            {% if value is empty %}
+                not specified
+            {% else %}
+                {{ value }}
+            {% endif %}
+        </div>
+    </div>
+    <hr/>
+{% endmacro %}
+
+{% import _self as macros %}
+
+{% extends  "layout.twig" %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/profile.css">
+{% endblock %}
+{% block title %}Edit prifile {{ user.getLogin }}{% endblock %}
+
+{% block breadcrumb %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Profile</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="profile">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-start">
+                    <div class="image-container">
+                        <img class="img-thumbnail" src="{{ user.getAvatar }}" alt="user avatar"/>
+                    </div>
+                    <div class="header-container ml-3">
+                        <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">{{ user.getFullName }}</h2>
+                        <a href="/users/profile/edit" class=""><i class="fas fa-pen"></i> Edit profile</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <ul class="nav nav-tabs mb-4" id="myTab" role="tablist">
+                    <li class="nav-item">
+                        <a class="nav-link active" id="basicInfo-tab" data-toggle="tab" href="#basicInfo" role="tab"
+                           aria-controls="basicInfo" aria-selected="true">Basic Info</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="addressInfo-tab" data-toggle="tab" href="#addressInfo" role="tab"
+                           aria-controls="addressInfo" aria-selected="false">Address</a>
+                    </li>
+                </ul>
+                <div class="tab-content ml-1" id="myTabContent">
+                    <div class="tab-pane fade show active" id="basicInfo" role="tabpanel"
+                         aria-labelledby="basicInfo-tab">
+                        {{ macros.row('Full Name', user.getFullName) }}
+                        {{ macros.row('Login', user.getLogin) }}
+                        {{ macros.row('Email', user.getEmail) }}
+                    </div>
+                    <div class="tab-pane fade" id="addressInfo" role="tabpanel" aria-labelledby="addressInfo-tab">
+                        {{ macros.row('Country:', user.address.getCountry) }}
+                        {{ macros.row('City:', user.address.getCity) }}
+                        {{ macros.row('Street:', user.address.getStreet) }}
+                        {{ macros.row('Post Code:', user.address.getPostalCode) }}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

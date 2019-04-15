@@ -8,12 +8,15 @@ use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Embedded;
 use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
 use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
 
 /**
  * Class User
  * @package App\Model
- * @Entity @Table(name="users")
+ * @Table(name="users")
+ * @Entity(repositoryClass="App\Model\Repository\UserRepository")
  */
 class User
 {
@@ -24,7 +27,9 @@ class User
 
     /**
      * @var int
-     * @Id @Column(type="integer") @GeneratedValue
+     * @Id
+     * @Column(type="integer")
+     * @GeneratedValue
      */
     protected $id;
     /**
@@ -43,8 +48,8 @@ class User
      */
     protected $password;
     /**
-     * @Column(type="string")
-     * @var string
+     * @Column(type="string", nullable=true)
+     * @var ?string
      */
     protected $fullName;
 
@@ -54,8 +59,8 @@ class User
      */
     protected $role;
     /**
-     * @var string
-     * @Column(type="string")
+     * @var ?string
+     * @Column(type="string", nullable=true)
      */
     protected $avatar;
 
@@ -98,9 +103,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getFullName(): string
+    public function getFullName(): ?string
     {
         return $this->fullName;
     }
@@ -122,9 +127,9 @@ class User
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getAvatar(): string
+    public function getAvatar(): ?string
     {
         return $this->avatar;
     }

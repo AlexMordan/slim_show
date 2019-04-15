@@ -1,0 +1,50 @@
+{% extends "auth/layout.twig" %}
+{% block title %}Register new user{% endblock %}
+
+{% block content %}
+    <form class="form-signup" method="post" action="/registration">
+        <div class="header">
+            <i class="fas fa-user-plus"></i>
+            <h3>Sign Up please</h3>
+        </div>
+        <div class="form-group">
+            <label for="inputLogin">Login</label>
+            <input type="text"
+                   class="form-control"
+                   name="inputLogin"
+                   id="inputLogin"
+                   placeholder="Login"
+                   {% if login %}
+                       value="{{ login }}"
+                    {% endif %}
+            >
+        </div>
+        <div class="form-group">
+            <label for="inputEmail">Email address</label>
+            <input type="email"
+                   class="form-control"
+                   name="inputEmail"
+                   id="inputEmail"
+                   aria-describedby="emailHelp"
+                   placeholder="Enter email"
+                    {% if email %}
+                        value="{{ email }}"
+                    {% endif %}
+            >
+        </div>
+        <div class="form-group">
+            <label for="inputPassword">Password</label>
+            <input type="password" class="form-control" name="inputPassword" id="inputPassword" placeholder="Password">
+        </div>
+        {% if errors %}
+            <div class="alert alert-danger">
+                <ul>
+                    {% for error in errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+        {% endif %}
+        <button type="submit" class="btn btn-primary">Sign Up</button>
+    </form>
+{% endblock %}

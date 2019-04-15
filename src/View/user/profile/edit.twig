@@ -1,0 +1,66 @@
+{% macro input(name, value, label, type = "text") %}
+    <div class="form-group row">
+        <label for="input{{ name }}" class="col-sm-2 col-form-label">{{ label }}:</label>
+        <div class="col-sm-10">
+            <input type="{{ type }}" class="form-control" name="input{{ name }}" id="input{{ name }}" value="{{ value }}">
+        </div>
+    </div>
+{% endmacro %}
+
+{% import _self as form %}
+
+{% extends  "layout.twig" %}
+{% block head %}
+    <link rel="stylesheet" href="/assets/profile.css">
+{% endblock %}
+{% block title %}Edit prifile {{ user.getLogin }}{% endblock %}
+
+{% block breadcrumb %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/users/profile">Profile</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Update: {{ user.getFullName }}</li>
+        </ol>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="profile">
+        <div class="row">
+            <div class="col-12">
+                <div class="d-flex justify-content-start">
+                    <div class="image-container">
+                        <img class="img-thumbnail" src="{{ user.getAvatar }}" alt="user avatar"/>
+                    </div>
+                    <div class="header-container ml-3">
+                        <h2 class="d-block" style="font-size: 1.5rem; font-weight: bold">{{ user.getFullName }}</h2>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <h4>Update you profile</h4>
+            <form action="/users/profile/edit" method="post" enctype="multipart/form-data">
+                <div class="form-group row">
+                    <label for="inputLogin" class="col-sm-2 col-form-label">Login:</label>
+                    <div class="col-sm-10">
+                        <input readonly type="text" class="form-control" name="inputLogin" id="inputLogin" value="{{ user.getLogin }}">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="inputAvatar" class="col-sm-2 col-form-label">New Avatar:</label>
+                    <div class="col-sm-10">
+                        <input type="file" class="form-control-file" name="inputAvatar" id="inputAvatar">
+                    </div>
+                </div>
+                    {{ form.input('email', user.getEmail, 'Email', 'email') }}
+                    {{ form.input('fullName', user.getFullName, 'Full name') }}
+                <div class="row">
+                    <div class="col-sm-2"></div>
+                    <div class="col-sm-4">
+                        <button class="btn btn-primary btn-block" type="submit">Save</button>
+                    </div>
+                </div>
+            </form>
+    </div>
+{% endblock %}

@@ -1,2 +1,4 @@
 /vendor
 /.idea
+/Storage/Cache
+/public/uploads/
